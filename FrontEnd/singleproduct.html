@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Product</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header>
+    <a href="product.html">← Back</a>
+  </header>
+
+  <div class="container" id="productBox"></div>
+
+  <script>
+    const API = "http://localhost:5000/api/products";
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const isEdit = params.get("edit") === "true";
+
+    async function loadProduct() {
+      const res = await fetch(`${API}/${id}`);
+      const p = await res.json();
+
+      if (!isEdit) {
+        document.getElementById("productBox").innerHTML = `
+        <div class="product-view">
+          <div class="product-image">
+            <img src="${p.image || 'logo.png'}">
+          </div>
+          <div class="product-info">
+            <h1>${p.name}</h1>
+            <p class="price">$${p.price}</p>
+            
+            <div class="spec-box">
+              <h3>Description</h3>
+              <p>${p.description || "No description available"}</p>
+            </div>
+
+            <div class="quantity-box">
+              <label><b>Quantity:</b></label>
+              <input type="number" id="qty" value="1" min="1">
+            </div>
+
+            <button class="add-btn" onclick="addToCart('${p._id}')">Add to Cart 🛒</button>
+          </div>
+        </div>
+      `;
+      } else {
+        // EDIT FORM
+        document.getElementById("productBox").innerHTML = `
+      <h2>Edit Product</h2>
+
+      <input id="name" value="${p.name}" placeholder="Name">
+      <input id="price" value="${p.price}" placeholder="Price">
+      <input id="image" value="${p.image || ""}" placeholder="Image URL">
+      <textarea id="description">${p.description || ""}</textarea>
+
+      <button onclick="updateProduct()">Update</button>
+    `;
+      }
+    }
+
+    async function updateProduct() {
+      const data = {
+        name: document.getElementById("name").value,
+        price: document.getElementById("price").value,
+        image: document.getElementById("image").value,
+        description: document.getElementById("description").value
+      };
+
+      await fetch(`${API}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify(data)
+      });
+
+      alert("Product updated successfully");
+      window.location.href = "product.html";
+    }
+
+    async function addToCart(productId) {
+      const qty = document.getElementById("qty").value;
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("Please login first");
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/cart/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            productId,
+            name: document.querySelector(".product-info h1").innerText,
+            price: document.querySelector(".price").innerText.replace(/[^0-9.]/g, ""), // Extract only numbers
+            image: document.querySelector(".product-image img").src,
+            quantity: qty
+          })
+        });
+
+        if (res.status === 401) {
+          alert("Session expired. Please login again.");
+          localStorage.removeItem("token");
+          localStorage.removeItem("userName");
+          sessionStorage.clear();
+          window.location.href = "login.html";
+          return;
+        }
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("Added to cart ✅");
+        } else {
+          alert(data.message || "Add to cart failed ❌");
+        }
+      } catch (err) {
+        console.error("Add to cart error:", err);
+        alert("Server error. Please try again.");
+      }
+    }
+
+    loadProduct();
+  </script>
+
+</body>
+
+</html>

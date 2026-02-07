@@ -1,0 +1,88 @@
+1. download nodejs
+command=npm init -y
+command=npm install express cors body-parser
+command=npm install nodemon --save-dev
+Create server.js in backend folder
+command=npm --v
+command=node --v
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+how tgo run code
+1.node server.js (run command in backend folder)
+2.open mongodb and connect data base
+3. run index.html
+
+
+
+
+
+
+Download MPNGO DB
+
+npm install mongoose(command)
+
+
+
+
+
+after install mongodb AND set path
+
+
+Below part as admin
+-----------------------------------------------------------
+net start MongoDB(command)
+
+Expected Result : The MongoDB service was started successfully.
+
+
+
+sc query MongoDB(command)
+
+Look For : STATE : 4 RUNNING
+
+--------------------------------------------------------------
+
+
+you can open now normal cmd and open path backend
+
+node server.js
+Expected: Server running at http://localhost:5000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+One more thing to install
+
+npm install bcryptjs jsonwebtoken(command)

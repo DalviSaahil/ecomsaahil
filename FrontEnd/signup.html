@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Signup | ShopEase</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<form onsubmit="signupUser(event)">
+  <h2>Create Account</h2>
+
+  <input type="text" id="name" placeholder="Full Name" required>
+  <input type="email" id="email" placeholder="Email" required>
+
+  <input type="password" id="password" placeholder="Password" required
+         oninput="checkStrength(this.value)">
+
+  <div style="height:8px;background:#e5e7eb;border-radius:5px;margin-bottom:10px">
+    <div id="strengthBar" style="height:8px;width:0%;background:red;border-radius:5px"></div>
+  </div>
+  <small id="strengthText"></small>
+
+  <button>Create Account</button>
+  <p>Already registered? <a href="login.html">Login</a></p>
+</form>
+
+<script src="auth.js">
+// function checkStrength(password) {
+//   let strength = 0;
+//   if (password.length >= 6) strength++;
+//   if (/[A-Z]/.test(password)) strength++;
+//   if (/[0-9]/.test(password)) strength++;
+//   if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+//   const bar = document.getElementById("strengthBar");
+//   const text = document.getElementById("strengthText");
+
+//   const levels = ["Weak", "Fair", "Good", "Strong"];
+//   bar.style.width = (strength * 25) + "%";
+//   bar.style.background = ["red","orange","blue","green"][strength-1] || "red";
+//   text.innerText = levels[strength-1] || "Too Weak";
+// }
+function checkStrength(password) {
+  let strength = 0;
+  if (password.length >= 8) strength++;
+  if (/[A-Z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+  const bar = document.getElementById("strengthBar");
+  const text = document.getElementById("strengthText");
+
+  const levels = ["Weak", "Fair", "Good", "Strong"];
+  bar.style.width = (strength * 25) + "%";
+  bar.style.background = ["red","orange","blue","green"][strength-1] || "red";
+  text.innerText = levels[strength-1] || "Too Weak";
+}
+function signupUser() {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!email.includes("@")) {
+    alert("Invalid email");
+    return false;
+  }
+
+  if (password.length < 6) {
+    alert("Password too weak");
+    return false;
+  }
+
+  localStorage.setItem("user", JSON.stringify({ name, email, password }));
+  alert("Signup successful");
+  window.location.href = "login.html";
+  return false;
+}
+</script>
+
+</body>
+</html>

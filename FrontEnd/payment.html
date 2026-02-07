@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<form>
+  <h2>Payment</h2>
+  <input type="text" placeholder="Card Number" required>
+  <input type="text" placeholder="Expiry Date" required>
+  <input type="text" placeholder="CVV" required>
+  <button onclick="pay()">Pay Now</button>
+</form>
+
+<script>
+function pay(){
+  localStorage.removeItem("cart");
+  window.location="receipt.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Products | ShopEase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;"><img src="logo.png" alt="ShopEase Logo">
+      <h2 style="color:#2563eb">ShopEase</h2></a>
+      <span id="userBox" style="color:#16a34a;font-weight:600"></span>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cart.html">Cart</a>
+      <a href="wishlist.html">Wishlist</a>
+
+      <a href="login.html" id="loginLink">Login</a>
+      <a href="signup.html" id="signupLink">Signup</a>
+      <a href="#" id="logoutLink" onclick="logout()" style="display:none">
+        Logout
+      </a>
+      <div class="profile-menu" id="profileMenu" style="display:none">
+        <span id="profileName" onclick="toggleDropdown()">👤 User ▾</span>
+
+        <div class="dropdown" id="dropdownMenu">
+          <a href="profile.html">Profile</a>
+          <a href="#" onclick="logout()">Logout</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== PRODUCTS ===== -->
+  <div class="container">
+    <h2>Our Products</h2>
+
+    <div class="product-controls">
+      <input id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+      <select onchange="filterCategory(this.value)">
+        <option value="all">All Categories</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Accessories">Accessories</option>
+      </select>
+    </div>
+
+    <div class="products" id="productList"></div>
+  </div>
+
+  <!-- ===== LOGIN MODAL ===== -->
+  <div class="modal" id="loginModal">
+    <div class="modal-box">
+      <h2>Login Required 🔔</h2>
+      <p>Please login or signup to continue</p>
+
+      <div class="modal-actions">
+        <a href="login.html" class="modal-btn">Login</a>
+        <a href="signup.html" class="modal-btn secondary">Signup</a>
+        <button onclick="closeModal()" class="close-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    const userBox = document.getElementById("userBox");
+    const loginLink = document.getElementById("loginLink");
+    const signupLink = document.getElementById("signupLink");
+    const profileMenu = document.getElementById("profileMenu");
+    const profileName = document.getElementById("profileName");
+
+    if (isLoggedIn()) {
+      profileMenu.style.display = "inline-block";
+      profileName.innerText = "👤 " + getUserName() + " ▾";
+
+      loginLink.style.display = "none";
+      signupLink.style.display = "none";
+    } else {
+      profileMenu.style.display = "none";
+
+      loginLink.style.display = "inline";
+      signupLink.style.display = "inline";
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+      const dropdown = document.getElementById("dropdownMenu");
+      if (!e.target.closest(".profile-menu")) {
+        dropdown.style.display = "none";
+      }
+    });
+  </script>
+
+
+
+
+</body>
+
+</html>
