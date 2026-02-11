@@ -50,7 +50,25 @@
         <div class="profile-container">
             <h2>My Profile</h2>
             <div class="profile-card">
-                <div class="profile-avatar">👤</div>
+                <!-- <div class="profile-avatar">👤</div> -->
+<div class="profile-avatar" style="text-align:center; margin-bottom:20px;">
+
+    <img id="profileImage"
+         src="default-avatar.png"
+         alt="Profile Image"
+         style="width:130px;height:130px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 10px; border:3px solid #2563eb;">
+
+    <label for="imageUpload" 
+           style="display:inline-block;padding:8px 15px;background:#2563eb;color:white;border-radius:6px;cursor:pointer;">
+        Upload Image
+    </label>
+
+    <input type="file"
+           id="imageUpload"
+           accept="image/*"
+           style="display:none;">
+
+</div>
                 <div class="profile-details">
                     <div class="detail-group">
                         <label>Full Name</label>

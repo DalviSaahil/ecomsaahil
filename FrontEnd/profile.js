@@ -38,3 +38,37 @@ async function fetchUserProfile() {
         document.getElementById("userEmail").innerText = "Please check console/network";
     }
 }
+// ----------------
+// Load saved image
+document.addEventListener("DOMContentLoaded", () => {
+    const savedImage = localStorage.getItem("profileImage");
+    if (savedImage) {
+        document.getElementById("profileImage").src = savedImage;
+    }
+});
+
+// Upload image from device
+const imageInput = document.getElementById("imageUpload");
+
+if (imageInput) {
+    imageInput.addEventListener("change", function () {
+
+        const file = this.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+            alert("Please select an image file.");
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const imageData = e.target.result;
+            document.getElementById("profileImage").src = imageData;
+            localStorage.setItem("profileImage", imageData);
+        };
+
+        reader.readAsDataURL(file);
+    });
+}
