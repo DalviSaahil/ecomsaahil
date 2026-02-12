@@ -86,3 +86,9 @@ Expected: Server running at http://localhost:5000
 One more thing to install
 
 npm install bcryptjs jsonwebtoken(command)
+
+--------------------------------------------------
+command fot github
+1.git add .
+2. git commit -m "project uploaded"
+3.git push -u origin main

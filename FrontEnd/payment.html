@@ -2,24 +2,38 @@
 <html>
 <head>
   <title>Payment</title>
+  <style>
+    h2.paymentTitle{
+      text-align: center;
+      font-size: 35px;
+      font-weight: 700;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      text-decoration: none;
+      
+    }
+  </style>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<form>
-  <h2>Payment</h2>
+<script>
+function pay(event){
+  event.preventDefault();
+  alert("Payment Completed ✅");
+  localStorage.removeItem("cart");
+  window.location.href="receipt.html";
+}
+</script>
+<h2 class="paymentTitle">Payment</h2>
+<form onsubmit="pay(event)">
+  
   <input type="text" placeholder="Card Number" required>
   <input type="text" placeholder="Expiry Date" required>
   <input type="text" placeholder="CVV" required>
   <button onclick="pay()">Pay Now</button>
 </form>
 
-<script>
-function pay(){
-  localStorage.removeItem("cart");
-  window.location="receipt.html";
-}
-</script>
+
 
 </body>
 </html>
