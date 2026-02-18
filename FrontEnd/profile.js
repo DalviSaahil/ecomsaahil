@@ -42,8 +42,13 @@ async function fetchUserProfile() {
 // Load saved image
 document.addEventListener("DOMContentLoaded", () => {
     const savedImage = localStorage.getItem("profileImage");
+
+    const uploadButton=document.getElementById("uploadbtn")
     if (savedImage) {
         document.getElementById("profileImage").src = savedImage;
+        if(uploadButton){
+            uploadButton.style.display="none"
+        }
     }
 });
 
