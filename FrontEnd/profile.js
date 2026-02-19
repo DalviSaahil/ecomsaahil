@@ -43,11 +43,11 @@ async function fetchUserProfile() {
 document.addEventListener("DOMContentLoaded", () => {
     const savedImage = localStorage.getItem("profileImage");
 
-    const uploadButton=document.getElementById("uploadbtn")
+    const uploadButton = document.getElementById("uploadbtn")
     if (savedImage) {
         document.getElementById("profileImage").src = savedImage;
-        if(uploadButton){
-            uploadButton.style.display="none"
+        if (uploadButton) {
+            uploadButton.innerText = "Change Image";
         }
     }
 });

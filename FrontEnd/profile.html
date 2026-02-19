@@ -24,8 +24,10 @@
     <!-- ===== HEADER ===== -->
     <header>
         <div style="display:flex;align-items:center;gap:10px">
-            <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;"><img src="logo.png" alt="ShopEase Logo">
-      <h2 style="color:#2563eb">ShopEase</h2></a>
+            <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;"><img
+                    src="logo.png" alt="ShopEase Logo">
+                <h2 style="color:#2563eb">ShopEase</h2>
+            </a>
         </div>
 
         <nav>
@@ -35,7 +37,8 @@
             <a href="cart.html">Cart</a>
 
             <div class="profile-menu" id="profileMenu" style="display:none">
-                <span id="profileName" onclick="toggleDropdown()">👤 User ▾</span>
+                <img id="navProfileImg" src="default-avatar.png" class="nav-profile-img" alt="Profile">
+                <span id="profileName" onclick="toggleDropdown()">User ▾</span>
 
                 <div class="dropdown" id="dropdownMenu">
                     <a href="profile.html">Profile</a>
@@ -51,24 +54,15 @@
             <h2>My Profile</h2>
             <div class="profile-card">
                 <!-- <div class="profile-avatar">👤</div> -->
-<div class="profile-avatar" style="text-align:center; margin-bottom:20px;">
+                <div class="profile-avatar">
+                    <img id="profileImage" src="default-avatar.png" alt="Profile Image">
 
-    <img id="profileImage"
-         src="default-avatar.png"
-         alt="Profile Image"
-         style="width:130px;height:130px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 10px; border:3px solid #2563eb;">
+                    <label id="uploadbtn" for="imageUpload" class="upload-btn">
+                        Upload Image
+                    </label>
 
-    <label id="uploadbtn" for="imageUpload" 
-           style="display:inline-block;padding:8px 15px;background:#2563eb;color:white;border-radius:6px;cursor:pointer;">
-        Upload Image
-    </label>
-
-    <input type="file"
-           id="imageUpload"
-           accept="image/*"
-           style="display:none;">
-
-</div>
+                    <input type="file" id="imageUpload" accept="image/*" style="display:none;">
+                </div>
                 <div class="profile-details">
                     <div class="detail-group">
                         <label>Full Name</label>
@@ -92,25 +86,6 @@
 
     <script src="auth.js"></script>
     <script src="profile.js"></script>
-
-    <script>
-        const profileMenu = document.getElementById("profileMenu");
-        const profileNameHeader = document.getElementById("profileName");
-
-        if (isLoggedIn()) {
-            profileMenu.style.display = "inline-block";
-            profileNameHeader.innerText = "👤 " + getUserName() + " ▾";
-        } else {
-            window.location.href = "login.html";
-        }
-
-        document.addEventListener("click", (e) => {
-            const dropdown = document.getElementById("dropdownMenu");
-            if (!e.target.closest(".profile-menu")) {
-                dropdown.style.display = "none";
-            }
-        });
-    </script>
 
 </body>
 
