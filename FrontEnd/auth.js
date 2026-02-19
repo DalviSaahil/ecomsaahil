@@ -9,6 +9,53 @@ function isLoggedIn() {
 function getUserName() {
   return localStorage.getItem("userName") || sessionStorage.getItem("userName");
 }
+function updateNavbar() {
+  const loginLink = document.getElementById("loginLink");
+  const signupLink = document.getElementById("signupLink");
+  const profileMenu = document.getElementById("profileMenu");
+  const profileName = document.getElementById("profileName");
+  const navProfileImg = document.getElementById("navProfileImg");
+
+
+  if (isLoggedIn()) {
+    profileMenu.style.display = "flex"; // Changed to flex for alignment
+    profileMenu.style.alignItems = "center";
+
+
+    const name = getUserName();
+    profileName.innerText = name;
+
+
+    // Load image
+    const savedImage = localStorage.getItem("profileImage");
+    if (savedImage && navProfileImg) {
+      navProfileImg.src = savedImage;
+      navProfileImg.style.display = "block";
+    } else if (navProfileImg) {
+      navProfileImg.src = "default-avatar.png"; // Fallback
+    }
+
+
+    loginLink.style.display = "none";
+    signupLink.style.display = "none";
+  } else {
+    profileMenu.style.display = "none";
+    loginLink.style.display = "inline";
+    signupLink.style.display = "inline";
+  }
+}
+
+
+document.addEventListener("DOMContentLoaded", updateNavbar);
+
+
+// Close dropdown when clicking outside
+document.addEventListener("click", (e) => {
+  const dropdown = document.getElementById("dropdownMenu");
+  if (dropdown && dropdown.style.display === "block" && !e.target.closest(".profile-menu")) {
+    dropdown.style.display = "none";
+  }
+});
 function isStrongPassword(password) {
   return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password);
 }
